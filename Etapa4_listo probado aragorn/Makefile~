@@ -1,0 +1,37 @@
+JFLAGS = -g
+JC = javac
+JVM = java
+JDOC = javadoc -d
+
+Delta_time = 0.5
+End_time = 20
+Sampling_time = 0.05
+
+FILE=
+.SUFFIXES: .java .class
+.java.class:
+	$(JC) $(JFLAGS) $*.java
+
+CLASSES = \
+        PhysicsLab.java \
+        Ball.java \
+        MyWorld.java \
+        PhysicsElement.java \
+        Spring.java \
+        FixedHook.java \
+        SpringAttachable.java
+
+MAIN = PhysicsLab
+
+.PHONY: all run clean doc
+
+all: $(CLASSES:.java=.class)
+
+run: $(MAIN).class
+	$(JVM) $(MAIN) $(Delta_time) $(End_time) $(Sampling_time) 
+
+clean:
+	$(RM) *.class
+
+doc:
+	$(JDOC) . *.java		
